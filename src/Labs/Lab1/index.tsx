@@ -103,7 +103,7 @@ export default function Lab1() {
                 <img id="wd-starship"
                     width="400px"
                     src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
-                    alt="Image from internet"
+                    alt="internet"
                 />
                 <br />
                 Loading a local image:
@@ -112,7 +112,7 @@ export default function Lab1() {
                     width="400px"
                     height="200px"
                     src="images/img1.jpg"
-                    alt="Local image"
+                    alt="Local"
                 />
             </div>
             <div id="wd-forms">
