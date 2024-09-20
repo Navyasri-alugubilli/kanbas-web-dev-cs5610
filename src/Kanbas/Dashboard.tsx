@@ -8,7 +8,7 @@ export default function Dashboard() {
                 <div className="wd-dashboard-course">
                     <Link className="wd-dashboard-course-link"
                         to="/Kanbas/Courses/1234/Home">
-                        <img src="/images/download.png" width={200} />
+                        <img src="/images/download.png" width={200} alt="Course"/>
                         <div>
                             <h5>
                                 CS1234 React JS
@@ -23,7 +23,7 @@ export default function Dashboard() {
                 <div className="wd-dashboard-course">
                     <Link className="wd-dashboard-course-link"
                         to="/Kanbas/Courses/1234/Home">
-                        <img src="/images/download.png" width={200} />
+                        <img src="/images/download.png" width={200} alt="Course"/>
                         <div>
                             <h5>
                                 CS5610 Web Development
@@ -38,7 +38,7 @@ export default function Dashboard() {
                 <div className="wd-dashboard-course">
                     <Link className="wd-dashboard-course-link"
                         to="/Kanbas/Courses/1234/Home">
-                        <img src="/images/download.png" width={200} />
+                        <img src="/images/download.png" width={200} alt="Course"/>
                         <div>
                             <h5>
                                 CS5800 Algorithms
@@ -53,7 +53,7 @@ export default function Dashboard() {
                 <div className="wd-dashboard-course">
                     <Link className="wd-dashboard-course-link"
                         to="/Kanbas/Courses/1234/Home">
-                        <img src="/images/download.png" width={200} />
+                        <img src="/images/download.png" width={200} alt="Course"/>
                         <div>
                             <h5>
                                 CS5010 Program design paradigm
@@ -69,7 +69,7 @@ export default function Dashboard() {
                 <div className="wd-dashboard-course">
                     <Link className="wd-dashboard-course-link"
                         to="/Kanbas/Courses/1234/Home">
-                        <img src="/images/download.png" width={200} />
+                        <img src="/images/download.png" width={200} alt="Course"/>
                         <div>
                             <h5>
                                 CS5100 Foundations of AI
@@ -85,7 +85,7 @@ export default function Dashboard() {
                 <div className="wd-dashboard-course">
                     <Link className="wd-dashboard-course-link"
                         to="/Kanbas/Courses/1234/Home">
-                        <img src="/images/download.png" width={200} />
+                        <img src="/images/download.png" width={200} alt="Course"/>
                         <div>
                             <h5>
                                 CS5110 Introduction to data Management
@@ -101,7 +101,7 @@ export default function Dashboard() {
                 <div className="wd-dashboard-course">
                     <Link className="wd-dashboard-course-link"
                         to="/Kanbas/Courses/1234/Home">
-                        <img src="/images/download.png" width={200} />
+                        <img src="/images/download.png" width={200} alt="Course"/>
                         <div>
                             <h5>
                                 CS5011 Recitation for PDP
