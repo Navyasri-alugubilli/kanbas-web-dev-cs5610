@@ -7,7 +7,7 @@ export default function Labs() {
         <div id="wd-labs">
             <h1>Navya Sri Alugubilli</h1>
             <h2>Section 01</h2>
-            <h2><a className="wd-github-link"
+            <h2><a className="wd-github-link" id="wd-github"
               href="https://github.com/Navyasri-alugubilli/kanbas-web-dev-cs5610">
               Github repositories
             </a></h2>
