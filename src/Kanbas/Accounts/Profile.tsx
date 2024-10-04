@@ -32,9 +32,8 @@ export default function Profile() {
           </select>
         </div>
         <div className="p-2">
-          <button id="wd-signin-btn" className="btn btn-danger me-1 w-100"
-            type="button" data-bs-toggle="button"><Link to="/Kanbas/Account/Signin"
-              className="text-white text-decoration-none" >Sign out</Link></button>
+          <Link className="wd-signin-link text-white text-decoration-none btn btn-danger me-1 w-100"
+             to="/Kanbas/Account/Signin" type="button">Sign out</Link>
         </div>
       </div>
     </div>

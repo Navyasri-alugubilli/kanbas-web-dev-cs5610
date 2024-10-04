@@ -11,9 +11,10 @@ export default function Signin() {
           <input className="form-control"
             id="wd-password" placeholder="password" /></div>
         <div className="p-2">
-          <button id="wd-signin-btn" className="btn btn-primary me-1 w-100"
-            type="button" data-bs-toggle="button"><Link id="wd-signin-btn" className="text-white text-decoration-none"
-              to="/Kanbas/Dashboard"> Sign in </Link></button></div>
+          <Link className="wd-signin-link text-white text-decoration-none btn btn-primary me-1 w-100" to="/Kanbas/Dashboard" type="button">
+            Sign in
+          </Link>
+        </div>
         <div className="p-2">
           <Link id="wd-signup-link" to="/Kanbas/Account/Signup">Sign up</Link>
         </div>
