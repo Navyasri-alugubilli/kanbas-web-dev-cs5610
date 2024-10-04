@@ -55,7 +55,7 @@ export default function AssignmentEditor() {
             <div className="d-flex row mb-3 mb-3 p-3">
                 <label htmlFor="wd-Submission-type" className="form-label col-sm-3 col-form-label mb-3 mb-0">
                     Submission Type</label>
-                <div className="col-sm-9 border border-secondary pt-1">
+                <div className="col-sm-9 border border-secondary p-3">
 
                     <select className="form-select" id="wd-submission-type">
                         <option selected>Online</option>
@@ -90,7 +90,7 @@ export default function AssignmentEditor() {
                 <label htmlFor="wd-assign-to" className="form-label col-sm-3 col-form-label mb-3 mb-0">
                     Assign</label>
                 <div className="col-sm-9 border border-secondary p-3">
-                    <div className="d-flex row mb-3 mb-3">
+                    <div className="d-flex row mb-3 mb-3 pl-3">
                         <label htmlFor="wd-assign-to" className="form-label col-sm-3 col-form-label">
                             Assign to</label>
                         <input type="text" className="form-control"
