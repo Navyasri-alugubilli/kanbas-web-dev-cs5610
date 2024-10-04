@@ -1,13 +1,13 @@
 export default function AssignmentEditor() {
     return (
-        <div className="wd-css-styling-forms container">
+        <div className="wd-css-styling-forms container ">
             <div className="row mb-3">
                 <label htmlFor="wd-name" className="form-label col-sm-3 col-form-label">
                     Assignment Name</label>
                 <input type="text" className="form-control"
                     id="wd-name" placeholder="A1" />
                 <br />
-                <div className="row mb-9">
+                <div className="row mb-9 pt-1">
                     <textarea className="form-control" id="wd-description"
                         rows={3}> The assignment is available onlineLinks to an external site.
 
@@ -29,7 +29,6 @@ export default function AssignmentEditor() {
                     <input type="text" className="form-control"
                         id="wd-points" placeholder="100" /></div>
             </div>
-
             <div className="d-flex row mb-3 mb-3">
                 <label htmlFor="wd-Assigmentgroup" className="form-label col-sm-3 col-form-label mb-3 mb-0">
                     Assigment Group</label>
@@ -42,7 +41,6 @@ export default function AssignmentEditor() {
                     </select></div>
 
             </div>
-
             <div className="d-flex row mb-3 mb-3">
                 <label htmlFor="wd-diaplay-grade-as" className="form-label col-sm-3 col-form-label mb-3 mb-0">
                     Display Grade</label>
@@ -54,18 +52,16 @@ export default function AssignmentEditor() {
                     </select></div>
 
             </div>
+            <div className="d-flex row mb-3 mb-3 p-3">
+                <label htmlFor="wd-Submission-type" className="form-label col-sm-3 col-form-label mb-3 mb-0">
+                    Submission Type</label>
+                <div className="col-sm-9 border border-secondary pt-1">
 
-            <div className="d-flex row mb-3 mb-3">
-                <div className="d-flex row mb-3">
-                    <label htmlFor="wd-Submission-type" className="form-label col-sm-3 col-form-label mb-3 mb-0">
-                        Submission Type</label>
-                    <div className="col-sm-9">
-
-                        <select className="form-select" id="wd-submission-type">
-                            <option selected>Online</option>
-                            <option value="Online">Online</option>
-                            <option value="inpersion">In-person</option>
-                        </select><br /></div>
+                    <select className="form-select" id="wd-submission-type">
+                        <option selected>Online</option>
+                        <option value="Online">Online</option>
+                        <option value="inpersion">In-person</option>
+                    </select><br />
                     <div className="d-flex col-sm-9 mb-3 mb-3">
                         <label>Online Entry Option:</label><br />
                     </div>
@@ -90,12 +86,10 @@ export default function AssignmentEditor() {
                     </div>
                 </div>
             </div>
-
-
-            <div className="d-flex row mb-3 mb-3">
+            <div className="d-flex row mb-3 mb-3 p-3">
                 <label htmlFor="wd-assign-to" className="form-label col-sm-3 col-form-label mb-3 mb-0">
                     Assign</label>
-                <div className="col-sm-9">
+                <div className="col-sm-9 border border-secondary p-3">
                     <div className="d-flex row mb-3 mb-3">
                         <label htmlFor="wd-assign-to" className="form-label col-sm-3 col-form-label">
                             Assign to</label>
@@ -126,8 +120,8 @@ export default function AssignmentEditor() {
                         </div>
                     </div>
                 </div>
-                <hr />
             </div>
+            <hr />
             <div className="d-flex row mb-3 mb-3 float-end">
                 <div className="float-end">
                     <button id="wd-collapse-all" className="btn btn-lg btn-danger me-1 float-end"
