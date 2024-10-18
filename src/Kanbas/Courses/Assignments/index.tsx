@@ -40,7 +40,7 @@ export default function Assignments() {
                 <li className="wd-lesson list-group-item p-3 ps-1 d-flex justify-content-between">
                   <div className="d-flex align-items-center">
                     <BsGripVertical className="me-2 fs-3" />
-                    <MdOutlineAssignment className="me-2 fs-3" />
+                    <MdOutlineAssignment className="me-2 fs-3 wd-assignment-link text-success" />
                     <p>
                       <a
                         className="wd-assignment-link text-dark text-decoration-none"
@@ -48,8 +48,18 @@ export default function Assignments() {
                       >
                         <h5>{assignment.title}</h5>
                       </a>
-                      <span className="text-danger">Multiple modules</span> | <b>Not available until</b> {new Date(assignment.available).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} at {new Date(assignment.due).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toLowerCase()} | <br />
-                      <b> Due</b> {new Date(assignment.due).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} at {new Date(assignment.due).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).toLowerCase()} | {assignment.points}pts
+                      <span className="text-danger">Multiple modules</span> | <b>Not available until</b>{" "}
+                      {new Date(assignment.available).toLocaleDateString(
+                        "en-US",
+                        { month: "short", day: "numeric" }
+                      )}{" "}
+                      at {"12:00 AM"} | <br />
+                      <b>Due</b>{" "}
+                      {new Date(assignment.due).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      })}{" "}
+                      at {"11:59 PM"} | {assignment.points}pts
                     </p>
                   </div>
                   <div>
