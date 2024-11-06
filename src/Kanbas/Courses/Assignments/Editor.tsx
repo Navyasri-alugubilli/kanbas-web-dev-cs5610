@@ -1,28 +1,63 @@
 import { Link, useParams } from "react-router-dom";
 import * as db from "../../Database";
+import { useSelector, useDispatch } from "react-redux";
+import { addAssignment, deleteAssignment } from "./reducer";
+import { useState } from "react";
 export default function AssignmentEditor() {
     const { cid, aid } = useParams();
-    const assignments = db.assignments;
+    console.log('Course ID:', cid, 'Assignment ID:', aid);
+    const assignments = useSelector((state: any) => state.assignmentReducer.assignments);
+    const dispatch = useDispatch();
+    let assignment = assignments.find((a: any) => a._id === aid);
+    if (!assignment) {
+        assignment = db.assignments.find((a: any) => a._id === aid);
+    }
+    const [assignmentName, setAssignmentName] = useState(assignment.title || 'New Assignment');
+    const [description, setDescription] = useState(assignment.description || 'Description');
+    const [points, setPoints] = useState(assignment.points || 100);
+    const [dueDate, setDueDate] = useState(assignment.due ? new Date(assignment.due).toISOString().slice(0, 16) : '');
+    const [availableFrom, setAvailableFrom] = useState(assignment.available ? new Date(assignment.available).toISOString().slice(0, 16) : '');
+
+    const handleSave = () => {
+        const updatedAssignment = {
+            ...assignment,
+            title: assignmentName,
+            description,
+            course: cid,
+            due: new Date(dueDate).toISOString(),
+            available: new Date(availableFrom).toISOString(),
+            points,
+        };
+        dispatch(addAssignment(updatedAssignment))
+    };
+
+    const handleDelete = () => {
+        dispatch(deleteAssignment(aid));
+    };
+
     return (
-        <div className="wd-css-styling-forms container ">
+        <div className="wd-css-styling-forms container " id="wd-add-assignment">
             {assignments.filter((assignment: any) => assignment._id === aid && assignment.course === cid)
                 .map((assignment: any) => (
                     <><div className="row mb-3">
                         <label htmlFor="wd-name" className="form-label col-sm-3 col-form-label">
                             Assignment Name</label>
                         <input type="text" className="form-control"
-                            id="wd-name" placeholder={assignment.title} />
+                            id="wd-name" placeholder={assignment.title}
+                            onChange={(e) => setAssignmentName(e.target.value)} />
                         <br />
                         <div className="row mb-9 pt-1">
                             <textarea className="form-control" id="wd-description"
-                                rows={3} value={assignment.description} />
+                                rows={3} value={assignment.description}
+                                onChange={(e) => setDescription(e.target.value)} />
                         </div>
                     </div><div className="d-flex row mb-3 mb-3">
                             <label htmlFor="wd-points" className="form-label col-sm-3 col-form-label mb-3 mb-0">
                                 Points</label>
                             <div className="col-sm-9">
                                 <input type="text" className="form-control"
-                                    id="wd-points" placeholder="100" value={assignment.points} /></div>
+                                    id="wd-points" placeholder="100" value={assignment.points}
+                                    onChange={(e) => setPoints(parseInt(e.target.value))} /></div>
                         </div><div className="d-flex row mb-3 mb-3">
                             <label htmlFor="wd-Assigmentgroup" className="form-label col-sm-3 col-form-label mb-3 mb-0">
                                 Assigment Group</label>
@@ -92,7 +127,8 @@ export default function AssignmentEditor() {
                                         <div className="d-flex row mb-3">
                                             <label htmlFor="wd-due-date" className="form-label col-sm-3 col-form-label">
                                                 Due Date</label>
-                                            <input type="datetime-local" className="form-control" id="wd-due-date" value={new Date(assignment.due).toISOString().slice(0, 10) + "T23:59"} />
+                                            <input type="datetime-local" className="form-control" id="wd-due-date" value={new Date(assignment.due).toISOString().slice(0, 16)}
+                                                onChange={(e) => setDueDate(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
@@ -101,7 +137,8 @@ export default function AssignmentEditor() {
                                         <div className="d-flex">
                                             <div className="col-sm-6">
                                                 <label htmlFor="wd-available-from" className="form-label">Available from</label>
-                                                <input type="datetime-local" className="form-control" id="wd-available-from" value={new Date(assignment.available).toISOString().slice(0, 16)} />
+                                                <input type="datetime-local" className="form-control" id="wd-available-from" value={new Date(assignment.available).toISOString().slice(0, 16)}
+                                                    onChange={(e) => setAvailableFrom(e.target.value)} />
                                             </div>
                                             <div className="col-sm-6">
                                                 <label htmlFor="wd-available-from" className="form-label">Until</label>
@@ -117,11 +154,13 @@ export default function AssignmentEditor() {
                                     id="wd-assignment-save-link"
                                     to={`/Kanbas/Courses/${cid}/Assignments`}
                                     className="btn btn-lg btn-danger me-1 float-end"
+                                    //onClick={handleSave}
                                     style={{ textDecoration: 'none' }} >Save</Link>
                                 <Link
                                     id="wd-assignment-save-link"
                                     to={`/Kanbas/Courses/${cid}/Assignments`}
                                     className="btn btn-lg btn-secondary me-2 float-end"
+                                    onClick={handleDelete}
                                     style={{ textDecoration: 'none' }}>Cancel</Link>
                             </div>
                         </div ></>
