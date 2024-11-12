@@ -18,6 +18,6 @@ export default function AccountNavigation() {
         </Link> {" "}
         <br />
         </>
-      )) }
+      ))}
     </div>
 );}
