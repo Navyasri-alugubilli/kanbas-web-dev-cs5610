@@ -1,55 +1,70 @@
 import { Link, useParams } from "react-router-dom";
 import * as db from "../../Database";
 import { useSelector, useDispatch } from "react-redux";
-import { addAssignment, deleteAssignment } from "./reducer";
-import { useState } from "react";
+import { addAssignment, deleteAssignment, updateAssignment } from "./reducer";
+import { useEffect, useState } from "react";
 export default function AssignmentEditor() {
-    const { cid, aid } = useParams();
-    console.log('Course ID:', cid, 'Assignment ID:', aid);
-    const assignments = useSelector((state: any) => state.assignmentReducer.assignments);
-    const dispatch = useDispatch();
-    let assignment = assignments.find((a: any) => a._id === aid);
-    if (!assignment) {
-        assignment = db.assignments.find((a: any) => a._id === aid);
-    }
-    const [assignmentName, setAssignmentName] = useState(assignment.title || 'New Assignment');
-    const [description, setDescription] = useState(assignment.description || 'Description');
-    const [points, setPoints] = useState(assignment.points || 100);
-    const [dueDate, setDueDate] = useState(assignment.due ? new Date(assignment.due).toISOString().slice(0, 16) : '');
-    const [availableFrom, setAvailableFrom] = useState(assignment.available ? new Date(assignment.available).toISOString().slice(0, 16) : '');
-
+    type assignmentType = {
+        _id: string;
+        title: string;
+        description: string;
+        course: string;
+        due: string;
+        available: string;
+        points: number;
+      };
+      console.log(new Date().toISOString());
+      const { cid, aid } = useParams();
+      console.log(aid);
+      const assignments = db.assignments;
+      const dispatch = useDispatch();
+    // const [assignmentName, setAssignmentName] = useState(assignment.title || 'New Assignment');
+    // const [description, setDescription] = useState(assignment.description || 'Description');
+    // const [points, setPoints] = useState(assignment.points || 100);
+    // const [dueDate, setDueDate] = useState(assignment.due ? new Date(assignment.due).toISOString().slice(0, 16) : '');
+    // const [availableFrom, setAvailableFrom] = useState(assignment.available ? new Date(assignment.available).toISOString().slice(0, 16) : '');
+    const [assignment, setAssignment] = useState<assignmentType>({
+        _id: aid?.toString() || "",
+        title: "New Assignment",
+        description: "New Assignment Description",
+        course: cid?.toString() || "",
+        due: new Date().toISOString(),
+        available: new Date().toISOString(),
+        points: 100,
+      });
     const handleSave = () => {
         const updatedAssignment = {
             ...assignment,
-            title: assignmentName,
-            description,
-            course: cid,
-            due: new Date(dueDate).toISOString(),
-            available: new Date(availableFrom).toISOString(),
-            points,
         };
-        dispatch(addAssignment(updatedAssignment))
+        dispatch(updateAssignment(updatedAssignment))
     };
 
     const handleDelete = () => {
         dispatch(deleteAssignment(aid));
     };
 
+    useEffect(() => {
+        const selectedAssignment = assignments.find(
+          (assignment: any) => assignment._id === aid && assignment.course === cid
+        );
+        if (selectedAssignment) setAssignment(selectedAssignment);
+      }, [cid, aid, assignments]);
     return (
         <div className="wd-css-styling-forms container " id="wd-add-assignment">
-            {assignments.filter((assignment: any) => assignment._id === aid && assignment.course === cid)
-                .map((assignment: any) => (
+            
                     <><div className="row mb-3">
                         <label htmlFor="wd-name" className="form-label col-sm-3 col-form-label">
                             Assignment Name</label>
                         <input type="text" className="form-control"
                             id="wd-name" placeholder={assignment.title}
-                            onChange={(e) => setAssignmentName(e.target.value)} />
+                            onChange={(e) => setAssignment({ ...assignment, title: e.target.value })} />
                         <br />
                         <div className="row mb-9 pt-1">
                             <textarea className="form-control" id="wd-description"
                                 rows={3} value={assignment.description}
-                                onChange={(e) => setDescription(e.target.value)} />
+                                onChange={(e) => {
+                                    setAssignment({ ...assignment, description: e.target.value });
+                                  }} />
                         </div>
                     </div><div className="d-flex row mb-3 mb-3">
                             <label htmlFor="wd-points" className="form-label col-sm-3 col-form-label mb-3 mb-0">
@@ -57,7 +72,7 @@ export default function AssignmentEditor() {
                             <div className="col-sm-9">
                                 <input type="text" className="form-control"
                                     id="wd-points" placeholder="100" value={assignment.points}
-                                    onChange={(e) => setPoints(parseInt(e.target.value))} /></div>
+                                    onChange={(e) => setAssignment({ ...assignment, points: parseInt(e.target.value) })} /></div>
                         </div><div className="d-flex row mb-3 mb-3">
                             <label htmlFor="wd-Assigmentgroup" className="form-label col-sm-3 col-form-label mb-3 mb-0">
                                 Assigment Group</label>
@@ -128,7 +143,7 @@ export default function AssignmentEditor() {
                                             <label htmlFor="wd-due-date" className="form-label col-sm-3 col-form-label">
                                                 Due Date</label>
                                             <input type="datetime-local" className="form-control" id="wd-due-date" value={new Date(assignment.due).toISOString().slice(0, 16)}
-                                                onChange={(e) => setDueDate(e.target.value)} />
+                                                onChange={(e) => setAssignment({ ...assignment, due: e.target.value })} />
                                         </div>
                                     </div>
                                 </div>
@@ -138,7 +153,7 @@ export default function AssignmentEditor() {
                                             <div className="col-sm-6">
                                                 <label htmlFor="wd-available-from" className="form-label">Available from</label>
                                                 <input type="datetime-local" className="form-control" id="wd-available-from" value={new Date(assignment.available).toISOString().slice(0, 16)}
-                                                    onChange={(e) => setAvailableFrom(e.target.value)} />
+                                                    onChange={(e) => setAssignment({ ...assignment, available: e.target.value })} />
                                             </div>
                                             <div className="col-sm-6">
                                                 <label htmlFor="wd-available-from" className="form-label">Until</label>
@@ -154,7 +169,7 @@ export default function AssignmentEditor() {
                                     id="wd-assignment-save-link"
                                     to={`/Kanbas/Courses/${cid}/Assignments`}
                                     className="btn btn-lg btn-danger me-1 float-end"
-                                    //onClick={handleSave}
+                                    onClick={handleSave}
                                     style={{ textDecoration: 'none' }} >Save</Link>
                                 <Link
                                     id="wd-assignment-save-link"
@@ -165,8 +180,7 @@ export default function AssignmentEditor() {
                             </div>
                         </div ></>
 
-                ))
-            }
+                
         </div >
 
     );

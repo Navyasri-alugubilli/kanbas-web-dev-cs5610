@@ -14,16 +14,23 @@ export default function Dashboard(
         }
 ) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const dispatch = useDispatch();
 
     const { enrollments } = useSelector((state: any) => state.enrollmentReducer);;
-    const [showAllCourses, setShowAllCourses] = useState(false); // To toggle between all and enrolled courses
+    const [showAllCourses, setShowAllCourses] = useState(false); 
     const [currentEnrollments, setCurrentEnrollments] = useState(
         enrollments
             .filter((enrollment: { user: any; }) => enrollment.user === currentUser._id)
             .map((enrollment: { course: any; }) => enrollment.course)
     );
 
-    // Toggle between viewing all courses or only enrolled ones
+    useEffect(() => {
+        setCurrentEnrollments(
+          enrollments
+            .filter((enrollment: { user: any; }) => enrollment.user === currentUser._id)
+            .map((enrollment: { course: any; }) => enrollment.course)
+        );
+      }, [enrollments, currentUser._id]);
     const toggleEnrollments = () => {
         setShowAllCourses(!showAllCourses);
     };
@@ -31,13 +38,15 @@ export default function Dashboard(
         if (currentEnrollments.includes(courseId)) {
             // Unenroll
             setCurrentEnrollments(currentEnrollments.filter((id: string) => id !== courseId));
+            dispatch(unenrollCourse({ user: currentUser._id, course: courseId }));
         } else {
             // Enroll
             setCurrentEnrollments([...currentEnrollments, courseId]);
+            dispatch(enrollCourse({ user: currentUser._id, course: courseId }));
         }
     };
 
-    // Filter courses based on the view state (all or enrolled only)
+    
     const filteredCourses = showAllCourses
         ? courses
         : courses.filter((course) =>
@@ -65,15 +74,16 @@ export default function Dashboard(
                     <textarea value={course.description} className="form-control"
                         onChange={(e) => setCourse({ ...course, description: e.target.value })} />
                     <hr />
+                    <h2 id="wd-dashboard-published">Published Courses ({currentEnrollments.length})</h2> <hr />
                 </>
             )}
-            <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
             {currentUser.role === 'STUDENT' && (
-                <button className="btn btn-primary float-end"
-                    style={{ position: 'absolute', top: '10px', right: '10px' }}
-                    onClick={toggleEnrollments}>
-                    Enrollments
-                </button>
+                <><h2 id="wd-dashboard-published">Published Courses ({currentEnrollments.length})</h2><hr />
+                    <button className="btn btn-primary float-end"
+                        style={{ position: 'absolute', top: '10px', right: '10px' }}
+                        onClick={toggleEnrollments}>
+                        Enrollments
+                    </button></>
             )}
 
             <div id="wd-dashboard-courses" className="row">
