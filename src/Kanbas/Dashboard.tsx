@@ -101,7 +101,7 @@ export default function Dashboard(
                                         <p className="wd-dashboard-course-title card-text overflow-y-hidden" style={{ maxHeight: 100 }}>
                                             {course.description}
                                         </p>
-                                        <ProtectedButton><button className="btn btn-primary"> Go </button></ProtectedButton>
+                                        <button className="btn btn-primary"> Go </button>
                                         {currentUser.role == "FACULTY" && (
                                             <><button onClick={(event) => {
                                                 event.preventDefault();

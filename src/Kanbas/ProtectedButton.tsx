@@ -6,9 +6,14 @@ export default function ProtectedButton({ children }: { children: any }) {
     const { cid } = useParams();
     console.log("id",cid)
     console.log(enrollments)
+    type enrollmentType = {
+        _id: string;
+        user: string;
+        course: string;
+      };
     const isEnrolled = enrollments.some(
-        (enrollment: { user: string; course: { _id: string } }) =>
-            enrollment.user === currentUser._id && enrollment.course._id === cid
+        (enrollment: enrollmentType) =>
+            enrollment.user === currentUser._id && enrollment.course === cid
     );
     if (isEnrolled) {
         return children;
