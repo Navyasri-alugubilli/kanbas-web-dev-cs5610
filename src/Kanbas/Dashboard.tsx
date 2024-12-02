@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import * as db from "./Database";
+// import * as db from "./Database";
 import { useDispatch, useSelector } from "react-redux";
 import { enrollCourse, unenrollCourse } from "./reducer";
 import ProtectedButton from "./ProtectedButton";
@@ -88,7 +88,7 @@ export default function Dashboard(
 
             <div id="wd-dashboard-courses" className="row">
                 <div className="row row-cols-1 row-cols-md-5 g-4">
-                    {filteredCourses.map((course) => (
+                    {courses.map((course) => (
                         <div className="wd-dashboard-course  col" style={{ width: "300px" }}>
                             <div className="card rounded-3 overflow-hidden">
                                 <Link className="wd-dashboard-course-link text-decoration-none text-dark"
