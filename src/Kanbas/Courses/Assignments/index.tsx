@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AssignmentControls from "./AssignmentControls";
 import { BsGripVertical } from "react-icons/bs";
 import { IoEllipsisVertical } from "react-icons/io5";
@@ -9,9 +9,11 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { useParams } from "react-router";
 import * as db from "../../Database";
 import { useSelector, useDispatch } from "react-redux";
-import { addAssignment, updateAssignment, deleteAssignment }
+import { setassignments, addAssignment, updateAssignment, deleteAssignment }
   from "./reducer";
 import { FaTrash } from "react-icons/fa";
+import * as coursesClient from "../client";
+import * as assignmentClient from "./client"
 
 
 export default function Assignments() {
@@ -28,7 +30,7 @@ export default function Assignments() {
 
   const handleDelete = (aid: string) => {
     console.log("Deleting assignment with ID:", aid);
-    dispatch(deleteAssignment(aid));
+    removeAssignment(aid);
     setShowDialog(false);
   };
   const confirmDelete = (aid: string) => {
@@ -42,6 +44,22 @@ export default function Assignments() {
     setCurrentAssignmentId(aid);
     setShowDialog(true);
   };
+
+  const fetchAssignments = async () => {
+    const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+    dispatch(setassignments(assignments));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+  const removeAssignment = async (assignmentId: string) => {
+    await assignmentClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
+
+
+
+
   return (
     <div id="wd-assignments">
       <AssignmentControls
@@ -55,8 +73,7 @@ export default function Assignments() {
             points: "100"
           }));
           setAssignmentName("");
-        }
-        } assignments={assignments}
+        }} assignments={assignments}
       />
       <br />
       <br />
@@ -78,7 +95,6 @@ export default function Assignments() {
           </div>
           <ul className="wd-lessons list-group rounded-0">
             {assignments
-              .filter((assignment: any) => assignment.course === cid)
               .map((assignment: any) => (
                 <li className="wd-lesson list-group-item p-3 ps-1 d-flex justify-content-between">
                   <div className="d-flex align-items-center">

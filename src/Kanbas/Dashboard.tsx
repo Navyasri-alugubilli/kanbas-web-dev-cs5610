@@ -32,6 +32,7 @@ export default function Dashboard(
         );
       }, [enrollments, currentUser._id]);
     const toggleEnrollments = () => {
+        console.log("Toggling enrollments...");
         setShowAllCourses(!showAllCourses);
     };
     const handleToggleEnrollment = (courseId: string) => {
