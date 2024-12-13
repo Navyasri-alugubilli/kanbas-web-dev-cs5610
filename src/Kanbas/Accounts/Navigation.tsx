@@ -9,18 +9,21 @@ export default function AccountNavigation() {
     <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
       {links.map((link) => (
         <>
-        <Link
-          key = {link}
-          id={"wd-account-signin-link"}
-          to={`/Kanbas/Account/${link}`}
-          className={`list-group-item active border border-0 ${pathname.includes(link)? "active" : "text-danger"}`}
-        >
-          {link}{" "}
-        </Link> {" "}
-        <br />
+          <Link
+            key={link}
+            id={"wd-account-signin-link"}
+            to={`/Kanbas/Account/${link}`}
+            className={`list-group-item active border border-0 ${pathname.includes(link) ? "active" : "text-danger"}`}
+          >
+            {link}{" "}
+          </Link> {" "}
+          <br />
         </>
       ))}
       {currentUser && currentUser.role === "ADMIN" && (
-       <Link to={`/Kanbas/Account/Users`} className={`list-group-item ${active("Users")}`}> Users </Link> )}
-    </div>
-);}
+        <Link to={`/Kanbas/Account/Users`} className={`list-group-item active border border-0 ${active("Users") ? "active" : "text-danger"}}`}
+          style={!active("Users") ? { color: "red" } : {}}> Users </Link>)
+      }
+    </div >
+  );
+}

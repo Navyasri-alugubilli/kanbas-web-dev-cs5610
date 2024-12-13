@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export default function PeopleTable({ users = [] }: { users?: any[] }) {
   // const { cid } = useParams();
   // const { users, enrollments } = db;
+  console.log("Users",users,users[0])
   return (
     <div id="wd-people-table">
       <PeopleDetails />
