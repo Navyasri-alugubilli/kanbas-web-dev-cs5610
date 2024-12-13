@@ -7,17 +7,18 @@ import ProtectedButton from "./ProtectedButton";
 
 export default function Dashboard(
     { courses, course, setCourse, addNewCourse,
-        deleteCourse, updateCourse }: {
+        deleteCourse, updateCourse, enrolling, setEnrolling, updateEnrollment }: {
             courses: any[]; course: any; setCourse: (course: any) => void;
             addNewCourse: () => void; deleteCourse: (course: any) => void;
-            updateCourse: () => void;
+            updateCourse: () => void; enrolling: boolean; setEnrolling: (enrolling: boolean) => void;
+            updateEnrollment: (courseId: string, enrolled: boolean) => void;
         }
 ) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const dispatch = useDispatch();
 
     const { enrollments } = useSelector((state: any) => state.enrollmentReducer);;
-    const [showAllCourses, setShowAllCourses] = useState(false); 
+    const [showAllCourses, setShowAllCourses] = useState(false);
     const [currentEnrollments, setCurrentEnrollments] = useState(
         enrollments
             .filter((enrollment: { user: any; }) => enrollment.user === currentUser._id)
@@ -26,11 +27,11 @@ export default function Dashboard(
 
     useEffect(() => {
         setCurrentEnrollments(
-          enrollments
-            .filter((enrollment: { user: any; }) => enrollment.user === currentUser._id)
-            .map((enrollment: { course: any; }) => enrollment.course)
+            enrollments
+                .filter((enrollment: { user: any; }) => enrollment.user === currentUser._id)
+                .map((enrollment: { course: any; }) => enrollment.course)
         );
-      }, [enrollments, currentUser._id]);
+    }, [enrollments, currentUser._id]);
     const toggleEnrollments = () => {
         console.log("Toggling enrollments...");
         setShowAllCourses(!showAllCourses);
@@ -47,7 +48,7 @@ export default function Dashboard(
         }
     };
 
-    
+
     const filteredCourses = showAllCourses
         ? courses
         : courses.filter((course) =>
@@ -97,6 +98,15 @@ export default function Dashboard(
                                     <img src={`/images/courses/${course.image}`} width="100%" height={160} />
                                     <div className="card-body">
                                         <h5 className="wd-dashboard-course-title card-title">
+                                            {enrolling && (
+                                                <button onClick={(event) => {
+                                                    event.preventDefault();
+                                                    updateEnrollment(course._id, !course.enrolled);
+                                                }}
+                                                    className={`btn ${course.enrolled ? "btn-danger" : "btn-success"} float-end`} >
+                                                    {course.enrolled ? "Unenroll" : "Enroll"}
+                                                </button>
+                                            )}
                                             {course.name}
                                         </h5>
                                         <p className="wd-dashboard-course-title card-text overflow-y-hidden" style={{ maxHeight: 100 }}>
