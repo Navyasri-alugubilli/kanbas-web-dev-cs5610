@@ -24,7 +24,7 @@ export default function Dashboard(
             .filter((enrollment: { user: any; }) => enrollment.user === currentUser._id)
             .map((enrollment: { course: any; }) => enrollment.course)
     );
-
+    console.log(currentUser)
     useEffect(() => {
         setCurrentEnrollments(
             enrollments
@@ -47,15 +47,16 @@ export default function Dashboard(
             dispatch(enrollCourse({ user: currentUser._id, course: courseId }));
         }
     };
+    console.log(courses)
+    const validCourses = courses.filter((course) => course !== null && course !== undefined);
 
-
-    const filteredCourses = showAllCourses
-        ? courses
-        : courses.filter((course) =>
-            enrollments.some(
-                (enrollment: { user: any; course: any; }) => enrollment.user === currentUser._id && enrollment.course === course._id
-            )
-        );
+    // const filteredCourses = showAllCourses
+    //     ? courses
+    //     : courses.filter((course) =>
+    //         enrollments.some(
+    //             (enrollment: { user: any; course: any; }) => enrollment.user === currentUser._id && enrollment.course === course._id
+    //         )
+    //     );
 
     return (
         <div id="wd-dashboard">
@@ -90,7 +91,7 @@ export default function Dashboard(
 
             <div id="wd-dashboard-courses" className="row">
                 <div className="row row-cols-1 row-cols-md-5 g-4">
-                    {courses.map((course) => (
+                    {validCourses.map((course) => (
                         <div className="wd-dashboard-course  col" style={{ width: "300px" }}>
                             <div className="card rounded-3 overflow-hidden">
                                 <Link className="wd-dashboard-course-link text-decoration-none text-dark"
