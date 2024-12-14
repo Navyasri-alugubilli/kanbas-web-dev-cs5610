@@ -9,6 +9,13 @@ import { FaAlignJustify } from "react-icons/fa6";
 import { courses } from "../Database";
 import { useEffect, useState } from "react";
 import { findUsersForCourse } from "./client";
+import Quiz from "./Quiz";
+import QuizEditor from "./Quiz/DetailsEditor";
+import QuizDetails from "./Quiz/QuizDetailsScreen";
+import QuizPreviewScreen from "./Quiz/QuizPreviewScreen";
+import QuizResultScreen from "./Quiz/QuizResultScreen";
+import TakeQuizScreen from "./Quiz/TakeQuizScreen";
+import GradesTable from "./Grades/Table";
 
 export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams();
@@ -57,7 +64,18 @@ export default function Courses({ courses }: { courses: any[]; }) {
             <Route path="Modules" element={<Modules />} />
             <Route path="Assignments" element={<Assignments />} />
             <Route path="Assignments/:aid" element={<AssignmentEditor />} />
+            <Route path="Grades" element={<GradesTable />} />
             <Route path="People" element={<PeopleTable users={validUsers} />} />
+            <Route path="Quizzes" element={<Quiz />} />
+            <Route path="Quizzes/edit/:qid" element={<QuizEditor />} />
+            <Route
+              path="Quizzes/preview/:qid"
+              element={<QuizPreviewScreen />}
+            />
+            <Route path="Quizzes/new" element={<QuizEditor />} />
+            <Route path="Quizzes/Details/:qid" element={<QuizDetails />} />
+            <Route path="Quizzes/:qid/take" element={<TakeQuizScreen />} />
+            <Route path="Quizzes/:qid/result" element={<QuizResultScreen />} />
           </Routes>
         </div></div>
     </div>
